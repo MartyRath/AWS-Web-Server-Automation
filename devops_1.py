@@ -6,13 +6,16 @@
 # Imports
 import boto3
 
+# Prompt user for instance name
+instance_name = input("Input instance name> ")
+
 ####Variables for instance creation####
 ec2 = boto3.resource('ec2')
 
 # Must be up-to-date
 ami_id = 'ami-0e731c8a588258d0d'
 
-user_data_script = """#!/bin/bash 
+user_data_script = f"""#!/bin/bash 
   # apply any required patches to the operating system
   yum update -y
   yum install httpd -y
@@ -25,12 +28,14 @@ user_data_script = """#!/bin/bash
   # Write metadata to index.html
   # Creates index.html and adds html and body
   echo "<html><body>" > /var/www/html/index.html
-  echo "This instance is running in availability zone: " >> /var/www/html/index.html
+  echo "Your instance name is: {instance_name} <br>" >> /var/www/html/index.html
+  echo "<hr>This instance is running in availability zone: " >> /var/www/html/index.html
   curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone >> /var/www/html/index.html
   echo "<hr>The instance ID is: " >> /var/www/html/index.html
   curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id >> /var/www/html/index.html
   echo "<hr>The instance type is: " >> /var/www/html/index.html
   curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-type >> /var/www/html/index.html
+  echo "Here is your image stored on S3: <br> <img src="https://lab2bucket28jan.s3.amazonaws.com/sunflower.avif">" >> /var/www/html/index.html
   echo "</body></html>" >> /var/www/html/index.html
   """
 
@@ -41,6 +46,6 @@ new_instances = ec2.create_instances(
   InstanceType='t2.nano',
   KeyName='firstLabKey',
   SecurityGroups=['httpssh'],
-  TagSpecifications=[{'ResourceType': 'instance', 'Tags': [{'Key': 'Name','Value': 'Great'},]},],
+  TagSpecifications=[{'ResourceType': 'instance', 'Tags': [{'Key': 'Name','Value': instance_name},]},],
   UserData=user_data_script)
 print (new_instances[0].id)
