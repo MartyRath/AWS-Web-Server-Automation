@@ -13,7 +13,7 @@ instance_name = input("Input instance name> ")
 ec2 = boto3.resource('ec2')
 
 # Must be up-to-date
-ami_id = 'ami-0e731c8a588258d0d'
+ami_id = 'ami-0440d3b780d96b29d'
 
 user_data_script = f"""#!/bin/bash 
   # apply any required patches to the operating system
