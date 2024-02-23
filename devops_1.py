@@ -6,4 +6,9 @@
 
 from create_instance import create_instance
 
-create_instance()
+instance = create_instance()
+
+instance.wait_until_running()
+instance.reload()
+ip = instance.public_ip_address
+print(ip)
