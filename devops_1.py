@@ -5,6 +5,7 @@
 
 
 from create_instance import create_instance
+from create_bucket import create_bucket
 
 instance = create_instance()
 
@@ -12,3 +13,5 @@ instance.wait_until_running()
 instance.reload()
 ip = instance.public_ip_address
 print(ip)
+
+bucekt = create_bucket()
