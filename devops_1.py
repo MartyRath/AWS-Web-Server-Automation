@@ -14,4 +14,4 @@ instance.reload()
 ip = instance.public_ip_address
 print(ip)
 
-bucekt = create_bucket()
+create_bucket()

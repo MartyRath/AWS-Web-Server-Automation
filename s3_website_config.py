@@ -14,17 +14,27 @@ import boto3
 import requests
 
 
-def get_image(url, file_name):
+def get_image():
   # Response from image url request
-  response = requests.get(url)
+  response = requests.get("http://devops.witdemo.net/logo.jpg")
 
   # Opens logo.jpg in write binary mode
   try:
-    with open(file_name, "wb") as file:
+    with open("logo.jpg", "wb") as file:
       # Write the binary content from response to the file
       file.write(response.content)
-      print("Success! Saved as: " + file_name)
+      print("Success! Image saved as: " + "logo.jpg")
   except Exception as e:
-    print ("Issue downloading content", e)
+    print ("Issue downloading image", e)
 
-get_image("http://devops.witdemo.net/logo.jpg", "image.jpg")
+def bucket_policy(bucket_name):
+  bucket_policy = {
+  "Version": "2012-10-17",
+  "Statement": 
+  [{
+    "Sid": "PublicReadGetObject",
+    "Effect": "Allow",
+    "Principal": "*",
+    "Action": ["s3:GetObject"],
+    "Resource": f"arn:aws:s3:::{bucket_name}/*"}]}
+  return bucket_policy
