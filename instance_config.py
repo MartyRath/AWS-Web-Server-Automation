@@ -2,6 +2,9 @@
 # Author: Marty Rath
 # Description: Generates a user data script for an ec2 instance.
 
+import requests
+import time
+
 def generate_user_data_script(instance_name):
   script = f"""#!/bin/bash 
   # apply any required patches to the operating system
@@ -27,3 +30,22 @@ def generate_user_data_script(instance_name):
   echo "</body></html>" >> /var/www/html/index.html
   """
   return script
+
+# Checks if url returns code less than 400 using response.ok, i.e. if server is ready
+def is_server_ready(url):
+  try:
+    response = requests.get(url)
+    return response.ok
+  except requests.RequestException:
+    return False
+  
+# Loops is_web_server_ready until server responds True or until 100 seconds is up
+def wait_until_server_ready(url):
+  attempts = 20
+  while attempts > 0:
+    if is_server_ready(url):
+      print("Server ready!")
+      break # exits the loops
+    attempts -= 1
+    time.sleep(5)
+  print("Server failed to load on time")

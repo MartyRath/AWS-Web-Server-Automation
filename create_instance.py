@@ -4,7 +4,7 @@
 
 import boto3
 import time
-from user_data_script import generate_user_data_script
+import instance_config
 import webbrowser
 
 def create_instance(ami_id):
@@ -26,16 +26,17 @@ def create_instance(ami_id):
     KeyName='firstLabKey',
     SecurityGroups=['httpssh'],
     TagSpecifications=[{'ResourceType': 'instance', 'Tags': [{'Key': 'Name','Value': instance_name},]},],
-    UserData=generate_user_data_script(instance_name))
+    UserData=instance_config.generate_user_data_script(instance_name))
     print ("Instance: " + instance[0].id + " has successfully been created")
     
     instance = instance[0]
     instance.wait_until_running()
     instance.reload()
-    time.sleep(30)
     print("Instance running")
     public_ip = instance.public_ip_address
     url = f'http://{public_ip}/'
+    # Checks if server is ready before attempting to open
+    instance_config.wait_until_server_ready(url)
     # Setting to append to not overwrite bucket url
     with open("mrath-websites.txt", "a") as file:
       file.write(url)
