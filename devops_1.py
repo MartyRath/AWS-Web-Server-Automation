@@ -7,11 +7,10 @@
 from create_instance import create_instance
 from create_bucket import create_bucket
 
-instance = create_instance()
 
-instance.wait_until_running()
-instance.reload()
-ip = instance.public_ip_address
-print(ip)
+ami_id = 'ami-0440d3b780d96b29d'
 
 create_bucket()
+create_instance(ami_id)
+
+

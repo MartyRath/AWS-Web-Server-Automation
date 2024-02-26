@@ -5,12 +5,10 @@
 import boto3
 import time
 from user_data_script import generate_user_data_script
+import webbrowser
 
-def create_instance():
+def create_instance(ami_id):
   ec2 = boto3.resource('ec2')
-  
-  # Ensure this is up to date
-  ami_id = 'ami-0440d3b780d96b29d'
   
   # Using time to name instance
   local_time = time.localtime()
@@ -30,7 +28,16 @@ def create_instance():
     TagSpecifications=[{'ResourceType': 'instance', 'Tags': [{'Key': 'Name','Value': instance_name},]},],
     UserData=generate_user_data_script(instance_name))
     print ("Instance: " + instance[0].id + " has successfully been created")
-    return instance[0]
+    
+    instance = instance[0]
+    instance.wait_until_running()
+    instance.reload()
+    time.sleep(10)
+    print("Instance running")
+    public_ip = instance.public_ip_address
+    url = f'http://{public_ip}/'
+    webbrowser.open_new_tab(url)
   except Exception as e:
-    print("Tip: Ensure ami_id and credentials are up-to-do", e)
-    return None
+    print("Ensure ami_id and credentials are up-to-date. Error: ", e)
+
+create_instance('ami-0440d3b780d96b29d')

@@ -15,7 +15,7 @@ def create_bucket():
     # Configures website
     bucket_config.configure_website(s3, bucket_name)
     # Gets the bucket policy
-    bucket_policy = bucket_config.bucket_policy(bucket_name)
+    bucket_policy = bucket_config.create_bucket_policy(bucket_name)
     # Clears default "block all public access" setting and sets policy
     bucket_config.set_bucket_policy_and_access(s3, bucket_name, bucket_policy)
     print("Bucket access & policy set")
