@@ -33,9 +33,10 @@ def create_bucket():
     print("index.html added to bucket")
     print("Bucket: " + bucket_name + " successfully created")
     url = f"http://{bucket_name}.s3-website-us-east-1.amazonaws.com"
+    
+    # Setting to write mode, will overwrite any data.
+    with open("mrath-websites.txt", "w") as file:
+      file.write(url + "\n")
     webbrowser.open_new_tab(url)
   except Exception as e:
     print (f"Issue creating bucket: {e}")
-
-
-create_bucket()

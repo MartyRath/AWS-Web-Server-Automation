@@ -32,12 +32,13 @@ def create_instance(ami_id):
     instance = instance[0]
     instance.wait_until_running()
     instance.reload()
-    time.sleep(10)
+    time.sleep(30)
     print("Instance running")
     public_ip = instance.public_ip_address
     url = f'http://{public_ip}/'
+    # Setting to append to not overwrite bucket url
+    with open("mrath-websites.txt", "a") as file:
+      file.write(url)
     webbrowser.open_new_tab(url)
   except Exception as e:
     print("Ensure ami_id and credentials are up-to-date. Error: ", e)
-
-create_instance('ami-0440d3b780d96b29d')
