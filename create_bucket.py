@@ -4,28 +4,32 @@
 
 import boto3
 import bucket_config
-import json
 
 def create_bucket():
   # Naming the bucket with six random characters and mrath
-  bucket_name = bucket_config.get_random_characters() + "mrath"
+  bucket_name = bucket_config.create_bucket_name()
   s3 = boto3.resource("s3")
   try:
     # Creates the bucket
     bucket = s3.create_bucket(Bucket=bucket_name)
-    # Clear default "block all public access" setting
-    s3client = boto3.client("s3")
-    s3client.delete_public_access_block(Bucket=bucket_name)
+    # Configures website
+    bucket_config.configure_website(s3, bucket_name)
     # Gets the bucket policy
     bucket_policy = bucket_config.bucket_policy(bucket_name)
-    # Sets the bucket policy
-    s3.Bucket(bucket_name).Policy().put(Policy=json.dumps(bucket_policy))
-    print("Bucket policy set")
-    # Adding image to bucket
-    bucket_config.get_image()
+    # Clears default "block all public access" setting and sets policy
+    bucket_config.set_bucket_policy_and_access(s3, bucket_name, bucket_policy)
+    print("Bucket access & policy set")
+    # Download image locally
+    bucket_config.download_image()
     image = 'logo.jpg'
-    s3.Object(bucket_name, image).put(Body=open(image, 'rb'))
+    # Upload image to bucket
+    s3.Object(bucket_name, image).put(Body=open(image, 'rb'), ContentType='image/jpeg')
     print("Image added to bucket")
+    # Creates index.html with image
+    bucket_config.create_index(bucket_name, image)
+    # Upload index.html to bucket
+    s3.Object(bucket_name, "index.html").put(Body=open("index.html", 'rb'), ContentType='text/html')
+    print("index.html added to bucket")
     print("Bucket: " + bucket_name + " successfully created")
     return bucket
   except Exception as e:

@@ -16,5 +16,4 @@ def delete_all_buckets():
   except Exception as e:
     print(f"Failed to delete buckets: {e}")
 
-# Usage
 delete_all_buckets()
