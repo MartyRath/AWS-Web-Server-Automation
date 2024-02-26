@@ -29,7 +29,7 @@ def create_bucket():
     print("Bucket: " + bucket_name + " successfully created")
     return bucket
   except Exception as e:
-    print ("Issue creating bucket", e)
+    print (f"Issue creating bucket: {e}")
 
 
 create_bucket()

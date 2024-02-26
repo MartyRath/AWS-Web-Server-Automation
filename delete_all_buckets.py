@@ -10,7 +10,7 @@ def delete_all_buckets():
     for bucket in s3.buckets.all():
       # Delete all objects in the bucket first
       bucket.objects.all().delete()
-      # Delete the bucket
+      # Then delete the bucket itself
       bucket.delete()
       print(f"Bucket '{bucket.name}' deleted successfully.")
   except Exception as e:
