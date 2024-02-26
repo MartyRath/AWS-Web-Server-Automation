@@ -31,7 +31,7 @@ def generate_user_data_script(instance_name):
   """
   return script
 
-# Checks if url returns code less than 400 using response.ok, i.e. if server is ready
+# Checks if instance website url returns code less than 400 using response.ok, i.e. if server is ready to access
 def is_server_ready(url):
   try:
     response = requests.get(url)
@@ -39,7 +39,7 @@ def is_server_ready(url):
   except requests.RequestException:
     return False
   
-# Loops is_web_server_ready until server responds True or until 100 seconds is up
+# Loops is_server_ready until server responds True or until 100 seconds is up
 def wait_until_server_ready(url):
   attempts = 20
   while attempts > 0:
