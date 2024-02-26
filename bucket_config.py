@@ -12,8 +12,17 @@ file names are not in the URL, just the bucket name '''
 
 import boto3
 import requests
+import uuid
 
+# Returns 6 random characters using uuid
+def get_random_characters():
+  # Getting a uuid of random characters
+  random_uuid = uuid.uuid4()
+  # Splicing down to 6 characters and converting to string
+  random_characters = str(random_uuid)[:6] 
+  return random_characters
 
+# Gets the image at url and names it logo.jpg
 def get_image():
   # Response from image url request
   response = requests.get("http://devops.witdemo.net/logo.jpg")
@@ -23,10 +32,11 @@ def get_image():
     with open("logo.jpg", "wb") as file:
       # Write the binary content from response to the file
       file.write(response.content)
-      print("Success! Image saved as: " + "logo.jpg")
+      print("Retrieved image saved as: " + "logo.jpg")
   except Exception as e:
     print ("Issue downloading image", e)
 
+# Sets the bucket policy for the input bucket name
 def bucket_policy(bucket_name):
   bucket_policy = {
   "Version": "2012-10-17",
