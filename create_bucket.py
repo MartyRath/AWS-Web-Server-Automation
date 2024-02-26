@@ -4,6 +4,7 @@
 
 import boto3
 import bucket_config
+import webbrowser
 
 def create_bucket():
   # Naming the bucket with six random characters and mrath
@@ -31,7 +32,8 @@ def create_bucket():
     s3.Object(bucket_name, "index.html").put(Body=open("index.html", 'rb'), ContentType='text/html')
     print("index.html added to bucket")
     print("Bucket: " + bucket_name + " successfully created")
-    return bucket
+    url = f"http://{bucket_name}.s3-website-us-east-1.amazonaws.com"
+    webbrowser.open_new_tab(url)
   except Exception as e:
     print (f"Issue creating bucket: {e}")
 
