@@ -48,4 +48,4 @@ def wait_until_server_ready(url):
       break # exits the loops
     attempts -= 1
     time.sleep(5)
-  print("Server failed to load on time")
+  else: print("Server failed to load on time")
