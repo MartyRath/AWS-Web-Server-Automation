@@ -7,7 +7,7 @@ import time
 import instance_config
 import webbrowser
 
-def create_instance(ami_id):
+def create_instance(ami_id, bucket_name):
   ec2 = boto3.resource('ec2')
   
   # Using time to name instance
@@ -26,8 +26,8 @@ def create_instance(ami_id):
     KeyName='firstLabKey',
     SecurityGroups=['httpssh'],
     TagSpecifications=[{'ResourceType': 'instance', 'Tags': [{'Key': 'Name','Value': instance_name},]},],
-    UserData=instance_config.generate_user_data_script(instance_name))
-    print ("Instance: " + instance[0].id + " has successfully been created")
+    UserData=instance_config.generate_user_data_script(instance_name, bucket_name))
+    print ("Instance created")
     
     instance = instance[0]
     instance.wait_until_running()
@@ -41,5 +41,6 @@ def create_instance(ami_id):
     with open("mrath-websites.txt", "a") as file:
       file.write(url)
     webbrowser.open_new_tab(url)
+    print ("Instance: " + instance[0].id + " has successfully been created")
   except Exception as e:
     print("Ensure ami_id and credentials are up-to-date. Error: ", e)

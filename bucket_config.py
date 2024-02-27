@@ -19,7 +19,7 @@ def create_bucket_name():
   # Getting a uuid of random characters
   random_uuid = uuid.uuid4()
   # Splicing down to 6 characters and converting to string
-  bucket_name = str(random_uuid)[:6] + "mrath" 
+  bucket_name = str(random_uuid)[:6] + "-mrath" 
   return bucket_name
 
 # Gets the image at url and names it logo.jpg
@@ -61,7 +61,9 @@ def configure_website(s3, bucket_name):
   website_configuration = {
   'ErrorDocument': {'Key': 'error.html'},
   'IndexDocument': {'Suffix': 'index.html'},}
+  # Create bucket website object
   bucket_website = s3.BucketWebsite(bucket_name)
+  # Adds configuration on website object
   bucket_website.put(WebsiteConfiguration=website_configuration)
 
 # Create an index page, add image from bucket, and save it index.html locally

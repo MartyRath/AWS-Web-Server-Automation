@@ -5,7 +5,7 @@
 import requests
 import time
 
-def generate_user_data_script(instance_name):
+def generate_user_data_script(instance_name, bucket_name):
   script = f"""#!/bin/bash 
   # apply any required patches to the operating system
   yum update -y
@@ -26,7 +26,7 @@ def generate_user_data_script(instance_name):
   curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id >> /var/www/html/index.html
   echo "<hr>The instance type is: " >> /var/www/html/index.html
   curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-type >> /var/www/html/index.html
-  echo "<hr>Here is your image stored on S3: <br> <img src="logo.jpg">" >> /var/www/html/index.html
+  echo "<hr>Here is your image stored on the S3 bucket {bucket_name}: <br> <img src="https://{bucket_name}.s3.amazonaws.com/logo.jpg">" >> /var/www/html/index.html
   echo "</body></html>" >> /var/www/html/index.html
   """
   return script

@@ -13,6 +13,7 @@ def create_bucket():
   try:
     # Creates the bucket
     bucket = s3.create_bucket(Bucket=bucket_name)
+    print("Bucket created")
     # Configures website
     bucket_config.configure_website(s3, bucket_name)
     # Gets the bucket policy
@@ -38,5 +39,6 @@ def create_bucket():
     with open("mrath-websites.txt", "w") as file:
       file.write(url + "\n")
     webbrowser.open_new_tab(url)
+    return bucket_name
   except Exception as e:
     print (f"Issue creating bucket: {e}")

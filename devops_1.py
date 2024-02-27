@@ -10,7 +10,10 @@ from create_bucket import create_bucket
 
 ami_id = 'ami-0440d3b780d96b29d'
 
-create_bucket()
-create_instance(ami_id)
+# Creates bucket and returns bucket name
+bucket_name = create_bucket()
+
+# Creates instance, inputting name as parameter to display bucket image
+create_instance(ami_id, bucket_name)
 
 
