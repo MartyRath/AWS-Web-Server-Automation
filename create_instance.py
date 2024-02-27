@@ -42,5 +42,6 @@ def create_instance(ami_id, bucket_name):
       file.write(url)
     webbrowser.open_new_tab(url)
     print ("Instance: " + instance.id + " has successfully been created")
+    return instance
   except Exception as e:
     print("Ensure ami_id and credentials are up-to-date. Error: ", e)
