@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # Author: Marty Rath     
-# Description: This Python program creates an s3 bucket, randomly named using uuid. Adapted from scripts made available in lab 4. 
+# Description: Creates an s3 bucket, randomly named using uuid. Adapted from scripts made available in lab 4. 
 
 import boto3
 import bucket_config

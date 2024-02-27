@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 # Author: Marty Rath
 # Description: Generates a user data script for an ec2 instance.
+# Functions:
+# generate_user_data_script
+# is_server_ready
+# wait_until_server_ready
 
 import requests
 import time

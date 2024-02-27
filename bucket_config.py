@@ -3,10 +3,10 @@
 # Description: This configures all requirements for the s3 bucket.
 # Functions: 
 # create_bucket_name
-# download_image
+# configure_website
 # create_bucket_policy
 # set_bucket_policy_and_access
-# configure_website
+# download_image
 # create_index
 
 import boto3
@@ -22,19 +22,15 @@ def create_bucket_name():
   bucket_name = str(random_uuid)[:6] + "-mrath" 
   return bucket_name
 
-# Gets the image at url and names it logo.jpg
-def download_image():
-  # Response from image url request
-  response = requests.get("http://devops.witdemo.net/logo.jpg")
-
-  # Opens logo.jpg in write binary mode
-  try:
-    with open("logo.jpg", "wb") as file:
-      # Write the binary content from response to the file
-      file.write(response.content)
-      print("Downloaded: " + "logo.jpg")
-  except Exception as e:
-    print ("Issue downloading image", e)
+# Creates and sets website configuration
+def configure_website(s3, bucket_name):
+  website_configuration = {
+  'ErrorDocument': {'Key': 'error.html'},
+  'IndexDocument': {'Suffix': 'index.html'},}
+  # Create bucket website object
+  bucket_website = s3.BucketWebsite(bucket_name)
+  # Adds configuration on website object
+  bucket_website.put(WebsiteConfiguration=website_configuration)
 
 # Creates the bucket policy for the input bucket name
 def create_bucket_policy(bucket_name):
@@ -56,15 +52,19 @@ def set_bucket_policy_and_access(s3, bucket_name, bucket_policy):
   # Sets the bucket policy
   s3.Bucket(bucket_name).Policy().put(Policy=json.dumps(bucket_policy))
 
-# Configures website
-def configure_website(s3, bucket_name):
-  website_configuration = {
-  'ErrorDocument': {'Key': 'error.html'},
-  'IndexDocument': {'Suffix': 'index.html'},}
-  # Create bucket website object
-  bucket_website = s3.BucketWebsite(bucket_name)
-  # Adds configuration on website object
-  bucket_website.put(WebsiteConfiguration=website_configuration)
+# Gets the image at url and names it logo.jpg
+def download_image():
+  # Response from image url request
+  response = requests.get("http://devops.witdemo.net/logo.jpg")
+
+  # Opens logo.jpg in write binary mode
+  try:
+    with open("logo.jpg", "wb") as file:
+      # Write the binary content from response to the file
+      file.write(response.content)
+      print("Downloaded: " + "logo.jpg")
+  except Exception as e:
+    print ("Issue downloading image", e)
 
 # Create an index page, add image from bucket, and save it index.html locally
 def create_index(bucket_name, image):

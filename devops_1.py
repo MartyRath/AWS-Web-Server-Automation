@@ -9,13 +9,11 @@ from create_bucket import create_bucket
 from monitoring_commands import monitoring_commands
 import subprocess
 
-
-# Ensure this is up-to-date
-ami_id = 'ami-0440d3b780d96b29d'
-
 # Creates bucket and returns bucket name
 bucket_name = create_bucket()
 
+# Ensure this is up-to-date
+ami_id = 'ami-0440d3b780d96b29d'
 # Creates instance, inputting name as parameter to display bucket image
 instance = create_instance(ami_id, bucket_name)
 
