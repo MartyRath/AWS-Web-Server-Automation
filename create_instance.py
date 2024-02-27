@@ -41,6 +41,6 @@ def create_instance(ami_id, bucket_name):
     with open("mrath-websites.txt", "a") as file:
       file.write(url)
     webbrowser.open_new_tab(url)
-    print ("Instance: " + instance[0].id + " has successfully been created")
+    print ("Instance: " + instance.id + " has successfully been created")
   except Exception as e:
     print("Ensure ami_id and credentials are up-to-date. Error: ", e)
