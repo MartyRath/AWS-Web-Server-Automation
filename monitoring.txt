@@ -1,4 +1,5 @@
-Instance ID: i-0aed52a5e9e1fa53c
-Memory utilisation: 31.84%
-No of processes: 120
+Instance ID: i-0e64db0bd45d317e9
+Memory utilisation: 32.29%
+No of processes: 118
+Diskspace being used: 20%
 Web server is running

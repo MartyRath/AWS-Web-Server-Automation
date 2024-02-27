@@ -7,10 +7,14 @@ INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.2
 MEMORYUSAGE=$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')
 PROCESSES=$(expr $(ps -A | grep -c .) - 1)
 HTTPD_PROCESSES=$(ps -A | grep -c httpd)
+# disk free in human readable mode from root. Extract the second line, fifth column
+DISK_USAGE=$(df -h / | awk 'NR==2{print $5}')
 
 echo "Instance ID: $INSTANCE_ID"
 echo "Memory utilisation: $MEMORYUSAGE"
 echo "No of processes: $PROCESSES"
+echo "Diskspace used: $DISK_USAGE"
+
 if [ $HTTPD_PROCESSES -ge 1 ]
 then
     echo "Web server is running"
