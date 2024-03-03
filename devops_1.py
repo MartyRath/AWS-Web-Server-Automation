@@ -22,5 +22,5 @@ instance = create_instance(ami_id, bucket_name)
 subprocess.run(monitoring_commands(instance.public_ip_address), shell=True)
 
 # Runs cloud watch monitoring
-run_cloud_watch(instance.id)
+run_cloud_watch(instance)
 
