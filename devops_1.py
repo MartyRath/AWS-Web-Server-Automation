@@ -7,6 +7,7 @@
 from create_instance import create_instance
 from create_bucket import create_bucket
 from monitoring_commands import monitoring_commands
+from cloud_watch import run_cloud_watch
 import subprocess
 
 # Creates bucket and returns bucket name
@@ -19,4 +20,7 @@ instance = create_instance(ami_id, bucket_name)
 
 # Runs monitoring script, saving to monitoring.txt and displaying results
 subprocess.run(monitoring_commands(instance.public_ip_address), shell=True)
+
+# Runs cloud watch monitoring
+run_cloud_watch(instance.id)
 
