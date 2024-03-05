@@ -10,6 +10,7 @@ HTTPD_PROCESSES=$(ps -A | grep -c httpd)
 # disk free in human readable mode from root. Extract the second line, fifth column
 DISK_USAGE=$(df -h / | awk 'NR==2{print $5}')
 
+echo
 echo "Instance ID: $INSTANCE_ID"
 echo "Memory utilisation: $MEMORYUSAGE"
 echo "No of processes: $PROCESSES"

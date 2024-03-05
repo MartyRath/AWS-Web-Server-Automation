@@ -4,3 +4,7 @@ firstLabKey.pem
 # monitoring details
 monitoring.txt
 mrath-websites.txt
+
+# Cache
+__pycache__/
+.pyc

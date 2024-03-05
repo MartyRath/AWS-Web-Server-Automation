@@ -30,6 +30,7 @@ def create_instance(ami_id, bucket_name):
     print ("Instance created")
     
     instance = instance[0]
+    instance.monitor()  # Enables detailed monitoring on instance (1-minute intervals)
     instance.wait_until_running()
     instance.reload()
     print("Instance running")

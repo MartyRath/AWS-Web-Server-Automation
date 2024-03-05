@@ -1,2 +1,1 @@
-http://cd58c4-mrath.s3-website-us-east-1.amazonaws.com
-http://54.174.69.79/
+http://603fd9-mrath.s3-website-us-east-1.amazonaws.com
