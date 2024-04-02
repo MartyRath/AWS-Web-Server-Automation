@@ -1,7 +1,8 @@
 #!/usr/bin/python3
+# Description: Using CloudWatch to monitor instance data
 
 import boto3
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 import time
 
 def run_cloud_watch(instance):

@@ -3,7 +3,6 @@
 # Description: Python 3 program to automate the process of creating, 
 #              launching and monitoring public-facing web servers in the Amazon cloud.
 
-
 from create_instance import create_instance
 from create_bucket import create_bucket
 from monitoring_commands import monitoring_commands
@@ -14,7 +13,7 @@ import subprocess
 bucket_name = create_bucket()
 
 # Ensure this is up-to-date
-ami_id = 'ami-0440d3b780d96b29d'
+ami_id = 'ami-0f403e3180720dd7e'
 # Creates instance, inputting name as parameter to display bucket image
 instance = create_instance(ami_id, bucket_name)
 
